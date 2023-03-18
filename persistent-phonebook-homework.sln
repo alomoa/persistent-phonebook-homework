@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33424.131
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "persistent-phonebook-homework", "persistent-phonebook-homework\persistent-phonebook-homework.csproj", "{D95AEB8A-D8AF-4728-976B-877874AAC0B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "test", "test\test.csproj", "{618D77E5-DDCF-4472-9A15-12D2B0DEEA97}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D95AEB8A-D8AF-4728-976B-877874AAC0B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D95AEB8A-D8AF-4728-976B-877874AAC0B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D95AEB8A-D8AF-4728-976B-877874AAC0B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D95AEB8A-D8AF-4728-976B-877874AAC0B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{618D77E5-DDCF-4472-9A15-12D2B0DEEA97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{618D77E5-DDCF-4472-9A15-12D2B0DEEA97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{618D77E5-DDCF-4472-9A15-12D2B0DEEA97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{618D77E5-DDCF-4472-9A15-12D2B0DEEA97}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {793156B0-88A6-446B-B44C-3D6849AB4E4A}
+	EndGlobalSection
+EndGlobal
