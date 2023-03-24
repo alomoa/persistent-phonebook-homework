@@ -1,23 +1,16 @@
 ﻿namespace PhonebookHomework
 {
-    public class PhoneBookFileService
+    public class PhoneBookFileService : IPhoneBookFileService
     {
         private readonly string path = Path.Combine(Environment.CurrentDirectory, "phonebook.txt");
         public PhoneBookFileService()
         {
-            
+
         }
 
-        public void Write(string name, String number)
+        public void Clear()
         {
-            var entry = $"{name} {number}";
-            
-
-            using (StreamWriter sw = File.AppendText(Path.Combine(Environment.CurrentDirectory, this.path)))
-            {
-                sw.WriteLine(entry);
-            }
-
+            File.Delete(path);
         }
 
         public Dictionary<string, string> GetEntries()
@@ -35,18 +28,17 @@
 
                 return entriesDict;
             }
-            catch {
+            catch
+            {
                 return new Dictionary<string, string>();
             }
 
         }
 
-        public void Update(Dictionary<string, string> entries)
+        public void Write(Dictionary<string, string> entries)
         {
-            File.WriteAllLines(Path.Combine(Environment.CurrentDirectory, this.path), entries.Select(entry => $"{entry.Key} {entry.Value}").ToArray());      
+            var entityWriteData = entries.Select(entry => $"{entry.Key} {entry.Value}").ToArray();
+            File.WriteAllLines(path, entityWriteData);
         }
     }
 }
-
-
-// Look into serialisation

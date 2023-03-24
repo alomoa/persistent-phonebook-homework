@@ -4,41 +4,36 @@ class Program
 {
     public static void Main(string[] args)
     {
-        PhoneBook phonebook = new PhoneBook();
+
+        // Refactor cases with methods instead
+
+        IPhoneBookFileService service = new PhoneBookFileService();
+        PhoneBook phonebook = new PhoneBook(service);
+
+        
 
         while (true)
         {
             Console.WriteLine("Please enter a command");
 
-            string[] arguments = Console.ReadLine().Trim().Split(" ");
+            string[] arguments = Console.ReadLine()
+                                        .Trim()
+                                        .Split(" ");
             try
             {
-
-
                 switch (arguments[0])
                 {
                     case "STORE":
-                        phonebook.Add(arguments[1], arguments[2]);
-                        Console.WriteLine("OK");
+                        Add(phonebook, arguments[1], arguments[2]);
                         break;
                     case "GET":
-                        Console.WriteLine($"OK {phonebook.Get(arguments[1])}"); 
+                        Console.WriteLine($"OK {phonebook.Get(arguments[1])}");
                         break;
                     case "UPDATE":
-                        var previousNumber = phonebook.Get(arguments[1]);
-                        phonebook.Update(arguments[1], arguments[2]);
-                        Console.WriteLine($"OK last no was - {previousNumber}");
+                        Update(phonebook, arguments[1], arguments[2]);
                         break;
                     case "DEL":
-                        if (long.TryParse(arguments[1], out var number))
-                        {
-                            phonebook.RemoveByNumber(arguments[1]);
-                        }
-                        else
-                        {
-                            phonebook.RemoveByName(arguments[1]);
-                        }
-                        Console.WriteLine($"OK");
+                        Delete(phonebook, arguments[1]);
                         break;
                     default:
                         break;
@@ -49,6 +44,54 @@ class Program
                 Console.WriteLine(e.Message);
             }
             Console.WriteLine();
+        }
+    }
+
+    private static void Delete(PhoneBook phonebook, string toDelete)
+    {
+        try
+        {
+
+            if (long.TryParse(toDelete, out var _))
+            {
+                phonebook.RemoveByNumber(toDelete);
+            }
+            else
+            {
+                phonebook.RemoveByName(toDelete);
+            }
+            Console.WriteLine($"OK");
+        }
+        catch
+        {
+            throw;
+        }
+    }
+
+    private static void Update(PhoneBook phonebook, string name, string number)
+    {
+        try
+        {
+            var previousNumber = phonebook.Get(name);
+            phonebook.Update(name, name);
+            Console.WriteLine($"OK last no was - {previousNumber}");
+        }
+        catch
+        {
+            throw;
+        }
+    }
+
+    private static void Add(PhoneBook phonebook, string name, string number)
+    {
+        try
+        {
+            phonebook.Add(name, number);
+            Console.WriteLine("OK");
+        }
+        catch
+        {
+            throw;
         }
     }
 }

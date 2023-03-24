@@ -2,91 +2,95 @@
 {
     public class PhoneBook
     {
-        private Dictionary<String, String> Entries;
-        private PhoneBookFileService phoneBookService;
+        //Fields should be lowecase instead
 
-        public PhoneBook()
+        private Dictionary<string, string> _entries;
+        private readonly IPhoneBookFileService phoneBookService;
+
+        public PhoneBook(IPhoneBookFileService service)
         {
-            phoneBookService = new PhoneBookFileService();
-            Entries = phoneBookService.GetEntries();
+            phoneBookService = service;
+            _entries = phoneBookService.GetEntries();
         }
 
-        public void Add(String name, String number)
+        public void Add(string name, string number)
         {
-            if (Entries.ContainsKey(name))
+            if (number.Length == 11)
             {
-                throw new KeyAlreadyExistsException($"{name} already exists in the phonebook");
-            }
-            if(number.Length == 11)
-            {
-                Entries[name] = number;
-                phoneBookService.Write(name, number);
+                //entries.add instead
+                _entries.Add(name, number);
+                phoneBookService.Write(_entries);
             }
             else
             {
-                throw new IncorrectLengthNumberException("The length of the number provided is incorrect ");
+                //Can be an argument exception instead
+                throw new ArgumentException("The length of the number provided is incorrect");
             }
-            
+
         }
 
         public string Get(string name)
         {
-            if (Entries.ContainsKey(name))
+            if (_entries.ContainsKey(name))
             {
-                return Entries[name];
+                return _entries[name];
             }
             else
             {
-                throw new KeyNotFoundException($"{name} name does not exist");
+                throw new ArgumentException($"{name} name does not exist");
             }
         }
 
         public void RemoveByName(string name)
         {
-            if (Entries.ContainsKey(name))
+            if (_entries.ContainsKey(name))
             {
-                Entries.Remove(name);
-                phoneBookService.Update(Entries);
+                _entries.Remove(name);
+                phoneBookService.Write(_entries);
             }
-            else { 
-                throw new KeyNotFoundException($"{name} does not exist in the phonebook");
+            else
+            {
+                throw new ArgumentException($"{name} does not exist in the phonebook");
             }
         }
 
-        public Dictionary<string, string>  GetEntries()
+        public Dictionary<string, string> GetEntries()
         {
-            return Entries;
+            return _entries;
         }
 
         public void RemoveByNumber(string number)
         {
-            var keys = Entries.Keys;
-            
-            foreach(var key in keys)
+            var keys = _entries.Keys;
+            var deleteSuccess = false;
+            foreach (var key in keys)
             {
-                if (Entries[key] == number)
+                if (_entries[key] == number)
                 {
-                    Entries.Remove(key);
-                    phoneBookService.Update(Entries);
-                    return;
+                    _entries.Remove(key);
+                    phoneBookService.Write(_entries);
+                    deleteSuccess = true;
+                    break;
                 }
             }
-
-            throw new KeyNotFoundException($"{number} does not exist in phonebook");
+            if (!deleteSuccess)
+            {
+                throw new ArgumentException($"{number} does not exist in phonebook");
+            }
         }
 
         public void Update(string name, string newNumber)
         {
-            if (Entries.ContainsKey(name))
+            if (_entries.ContainsKey(name))
             {
-                Entries[name] = newNumber;
+                _entries[name] = newNumber;
             }
         }
 
-        public void ClearAll()
+        public void Clear()
         {
-            Entries = new Dictionary<string, string>();
-            phoneBookService.Update(Entries);
+            _entries = new Dictionary<string, string>();
+            phoneBookService.Clear();
         }
     }
 }
